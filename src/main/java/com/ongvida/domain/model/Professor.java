@@ -19,6 +19,7 @@ public class Professor {
 	private String cpf;
 	private LocalDate dataNascimento;
 
+	
 	public Long getId() {
 		return id;
 	}
