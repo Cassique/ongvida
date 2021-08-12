@@ -1,12 +1,17 @@
 package com.ongvida.domain.model;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
+import com.sun.istack.NotNull;
 
 @Entity
 public class Professor {
@@ -14,10 +19,21 @@ public class Professor {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@NotBlank
+	@Size(max = 60 )
 	private String nome;
+	
+	@NotBlank
+	@Size(max = 255)
 	private String rg;
+	
+	@NotBlank
+	@Size(max = 255)
 	private String cpf;
-	private LocalDate dataNascimento;
+	
+	@NotNull
+    private LocalDate dataNascimento;
 
 	public Long getId() {
 		return id;
