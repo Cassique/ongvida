@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import com.ongvida.domain.model.Professor;
 import com.ongvida.domain.repository.ProfessorRepository;
+import com.ongvida.domain.service.CadastroProfessorService;
 
 @RestController
 @RequestMapping("/professores")
@@ -26,6 +27,8 @@ public class ProfessorController {
 	
 	@Autowired
 	private ProfessorRepository professorRepository;
+	@Autowired
+	private CadastroProfessorService cadastroProfessorService;
 	
 	@GetMapping
 	public List<Professor> listar(){
@@ -58,7 +61,7 @@ public class ProfessorController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public Professor adicionar(@Valid @RequestBody Professor professor) {
-	return	professorRepository.save(professor);
+	return	cadastroProfessorService.salvar(professor);
 		
 	}
 	
@@ -71,7 +74,7 @@ public class ProfessorController {
 		}
 		
 		professor.setId(professorId);
-		professor = professorRepository.save(professor);
+		professor = cadastroProfessorService.salvar(professor);
 		
 		return ResponseEntity.ok(professor);
 	}
@@ -82,7 +85,7 @@ public class ProfessorController {
 			return ResponseEntity.notFound().build();
 		}
 		
-		professorRepository.deleteById(professorId);
+		cadastroProfessorService.excluir(professorId);
 		return ResponseEntity.noContent().build();
 	}
 	

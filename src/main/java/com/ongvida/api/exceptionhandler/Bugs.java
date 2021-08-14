@@ -3,7 +3,10 @@ package com.ongvida.api.exceptionhandler;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class Exception {
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+@JsonInclude(Include.NON_NULL)
+public class Bugs {
 	
 	private Integer status;
 	private LocalDateTime dataHora;
