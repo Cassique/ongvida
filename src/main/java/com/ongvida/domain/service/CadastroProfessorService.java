@@ -13,7 +13,4 @@ public class CadastroProfessorService {
 	public void excluir(Long professorId) {
 		professorRepository.deleteById(professorId);
 	}
-	
-	
-	
-}
+		}
