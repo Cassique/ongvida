@@ -1,25 +1,36 @@
 package com.ongvida.domain.model;
-
-
 import java.time.LocalDate;
 import java.util.Objects;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import javax.validation.groups.ConvertGroup;
+import javax.validation.groups.Default;
 
+import org.hibernate.mapping.Set;
+
+import com.ongvida.domain.ValidationGroups;
 import com.sun.istack.NotNull;
 
 @Entity
 public class Professor {
-
-	@Id
+	
+    @Valid
+	@ConvertGroup(from = Default.class, to = ValidationGroups.ProfessorId.class)
+	@NotNull
+    @Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+   @ManyToMany
+   	Set<Aluno> likedAlunos;
+//    
 	@NotBlank
 	@Size(max = 60 )
 	private String nome;
@@ -34,6 +45,14 @@ public class Professor {
 	
 	@NotNull
     private LocalDate dataNascimento;
+	
+	public Aluno getAluno() {
+		return aluno;
+	}
+
+	public void setAluno(Aluno aluno) {
+		this.aluno = aluno;
+	}
 
 	public Long getId() {
 		return id;
@@ -66,6 +85,15 @@ public class Professor {
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
+	
+	public LocalDate getData_nascimento() {
+		return dataNascimento;
+	}
+
+	public void setData_nascimento(LocalDate data_nascimento) {
+		this.dataNascimento = data_nascimento;
+	}
+
 
 	@Override
 	public int hashCode() {
@@ -84,12 +112,4 @@ public class Professor {
 		return Objects.equals(id, other.id);
 	}
 
-	public LocalDate getData_nascimento() {
-		return dataNascimento;
 	}
-
-	public void setData_nascimento(LocalDate data_nascimento) {
-		this.dataNascimento = data_nascimento;
-	}
-
-}
