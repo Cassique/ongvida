@@ -1,16 +1,18 @@
 package com.ongvida.domain.model;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import com.sun.istack.NotNull;
+
 @Entity
 public class Aluno {
     
@@ -19,9 +21,6 @@ public class Aluno {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@ManyToMany
-	private Professor professor;
 	
 	@NotBlank
 	@Size(max = 60 )
@@ -38,14 +37,9 @@ public class Aluno {
 	@NotNull
     private LocalDate dataNascimento;
 	
-	//public Professor getProfessor() {
-		//return professor;
-	//}
-
-	//public void setProfessor(Professor professor) {
-		//this.professor = professor;
-	//}
-
+	@ManyToMany(mappedBy = "alunos")
+	private Set<Professor> professores = new HashSet<>();
+	
 	public Long getId() {
 		return id;
 	}
@@ -84,6 +78,14 @@ public class Aluno {
 
 	public void setDataNascimento(LocalDate dataNascimento) {
 		this.dataNascimento = dataNascimento;
+	}
+	
+	public Set<Professor> getProfessores() {
+		return professores;
+	}
+
+	public void setProfessores(Set<Professor> professores) {
+		this.professores = professores;
 	}
 
 	@Override

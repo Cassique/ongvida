@@ -1,24 +1,24 @@
 package com.ongvida.domain.model;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import javax.validation.groups.ConvertGroup;
 import javax.validation.groups.Default;
-
-import org.hibernate.mapping.Set;
-
 import com.ongvida.domain.ValidationGroups;
 import com.sun.istack.NotNull;
 
 @Entity
+
 public class Professor {
 	
     @Valid
@@ -28,12 +28,10 @@ public class Professor {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-   @ManyToMany
-   	Set<Aluno> likedAlunos;
-//    
-	@NotBlank
+    @NotBlank
 	@Size(max = 60 )
-	private String nome;
+
+    private String nome;
 	
 	@NotBlank
 	@Size(max = 255)
@@ -46,14 +44,13 @@ public class Professor {
 	@NotNull
     private LocalDate dataNascimento;
 	
-	public Aluno getAluno() {
-		return aluno;
+	@ManyToMany
+	private Set<Aluno> alunos = new HashSet<>();
+	
+	public Professor(){
+		
 	}
-
-	public void setAluno(Aluno aluno) {
-		this.aluno = aluno;
-	}
-
+	
 	public Long getId() {
 		return id;
 	}
@@ -94,6 +91,13 @@ public class Professor {
 		this.dataNascimento = data_nascimento;
 	}
 
+	public Set<Aluno> getAlunos() {
+		return alunos;
+	}
+
+	public void setAlunos(Set<Aluno> alunos) {
+		this.alunos = alunos;
+	}
 
 	@Override
 	public int hashCode() {
