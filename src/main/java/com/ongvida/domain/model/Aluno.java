@@ -1,4 +1,5 @@
 package com.ongvida.domain.model;
+
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Objects;
@@ -11,19 +12,23 @@ import javax.persistence.ManyToMany;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import javax.validation.groups.ConvertGroup;
+import javax.validation.groups.Default;
+import com.ongvida.domain.ValidationGroups;
 import com.sun.istack.NotNull;
 
 @Entity
 public class Aluno {
     
 	@Valid
+	@ConvertGroup(from = Default.class, to = ValidationGroups.AlunoId.class)
 	@NotNull
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	@NotBlank
-	@Size(max = 60 )
+	
 	private String nome;
 	
 	@NotBlank

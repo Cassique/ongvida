@@ -1,9 +1,9 @@
 package com.ongvida.domain.model;
+
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -31,7 +31,7 @@ public class Professor {
     @NotBlank
 	@Size(max = 60 )
 
-    private String nome;
+    private String name;
 	
 	@NotBlank
 	@Size(max = 255)
@@ -60,11 +60,11 @@ public class Professor {
 	}
 
 	public String getNome() {
-		return nome;
+		return name;
 	}
 
 	public void setNome(String nome) {
-		this.nome = nome;
+		this.name = nome;
 	}
 
 	public String getRg() {

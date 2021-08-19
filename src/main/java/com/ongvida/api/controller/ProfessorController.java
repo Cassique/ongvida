@@ -1,4 +1,5 @@
 package com.ongvida.api.controller;
+
 import java.util.List;
 import java.util.Optional;
 import javax.validation.Valid;
@@ -20,27 +21,25 @@ import com.ongvida.domain.service.CadastroProfessorService;
 
 @RestController
 @RequestMapping("/api/teachers")
-
+@RequiredArgsConstructor
 public class ProfessorController {
 	
-	@Autowired
-	private ProfessorRepository professorRepository;
-	@Autowired
-	private CadastroProfessorService cadastroProfessorService;
+	private final ProfessorRepository professorRepository = null;
+	private final CadastroProfessorService cadastroProfessorService = new CadastroProfessorService();
 	
 	@GetMapping
 	public List<Professor> listar(){
 		
 		return professorRepository.findAll();
 		}
-	@GetMapping("/tolist")
-	public List<Professor> listarPorNome(){
-		return professorRepository.findByNome("Cassio");
+	@GetMapping("/findAll")
+	public List<Professor> findByname(){
+		return professorRepository.findByName("Cassio");
 	}
 	
-	@GetMapping("/tolistcontaining")
-	public List<Professor> listarPorNomeContaining(){
-		return professorRepository.findByNomeContaining("Ca");
+	@GetMapping("/name/{name}")
+	public List<Professor> findBynameContaining(@PathVariable String name){
+		return professorRepository.findByNameContaining(name);
 	}
 	
 	@GetMapping("/{teacherId}")
