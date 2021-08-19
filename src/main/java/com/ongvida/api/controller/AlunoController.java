@@ -18,7 +18,7 @@ import com.ongvida.domain.model.Aluno;
 import com.ongvida.domain.repository.AlunoRepository;
 import com.ongvida.domain.service.CadastroAlunoService;
 @RestController
-@RequestMapping("/alunos")
+@RequestMapping("/api/students")
 
 public class AlunoController {
 	
@@ -32,17 +32,17 @@ public class AlunoController {
 		
 		return alunoRepository.findAll();
 		}
-	@GetMapping("/listar")
+	@GetMapping("/tolist")
 	public List<Aluno> listarPorNome(){				
 		return alunoRepository.findByNome("alunoAtualizado");
 	}
 	
-	@GetMapping("/listarcontaining")
+	@GetMapping("/tolistcontaining")
 	public List<Aluno> listarPorNomeContaining(){
 		return alunoRepository.findByNomeContaining("tu");
 	}
 	
-	@GetMapping("/{alunoId}")
+	@GetMapping("/{studentId}")
 	public ResponseEntity<Aluno> buscar(@PathVariable Long alunoId) {
 		Optional<Aluno> aluno = alunoRepository.findById(alunoId);
 	
@@ -62,7 +62,7 @@ public class AlunoController {
 		
 	}
 	
-	@PutMapping("/{alunoId}")
+	@PutMapping("/{studentId}")
 	public ResponseEntity<Aluno> atualizar(@Valid @PathVariable Long alunoId,
 	@RequestBody Aluno aluno){
 		
@@ -76,7 +76,7 @@ public class AlunoController {
 		return ResponseEntity.ok(aluno);
 	}
 	
-	@DeleteMapping("/{alunoId}")	
+	@DeleteMapping("/{studentId}")	
 	public ResponseEntity<Void> remover(@PathVariable Long alunoId) {
 		if (!alunoRepository.existsById(alunoId)) {
 			return ResponseEntity.notFound().build();

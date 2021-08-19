@@ -1,9 +1,7 @@
 package com.ongvida.api.controller;
 import java.util.List;
 import java.util.Optional;
-
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +19,7 @@ import com.ongvida.domain.repository.ProfessorRepository;
 import com.ongvida.domain.service.CadastroProfessorService;
 
 @RestController
-@RequestMapping("/professores")
+@RequestMapping("/api/teachers")
 
 public class ProfessorController {
 	
@@ -35,17 +33,17 @@ public class ProfessorController {
 		
 		return professorRepository.findAll();
 		}
-	@GetMapping("/listar")
+	@GetMapping("/tolist")
 	public List<Professor> listarPorNome(){
 		return professorRepository.findByNome("Cassio");
 	}
 	
-	@GetMapping("/listarcontaining")
+	@GetMapping("/tolistcontaining")
 	public List<Professor> listarPorNomeContaining(){
 		return professorRepository.findByNomeContaining("Ca");
 	}
 	
-	@GetMapping("/{professorId}")
+	@GetMapping("/{teacherId}")
 	public ResponseEntity<Professor> buscar(@PathVariable Long professorId) {
 		Optional<Professor> professor = professorRepository.findById(professorId);
 	
@@ -65,7 +63,7 @@ public class ProfessorController {
 		
 	}
 	
-	@PutMapping("/{professorId}")
+	@PutMapping("/{teacherId}")
 	public ResponseEntity<Professor> atualizar(@Valid @PathVariable Long professorId,
 	@RequestBody Professor professor){
 		
@@ -79,7 +77,7 @@ public class ProfessorController {
 		return ResponseEntity.ok(professor);
 	}
 	
-	@DeleteMapping("/{professorId}")
+	@DeleteMapping("/{teacherId}")
 	public ResponseEntity<Void> remover(@PathVariable Long professorId) {
 		if (!professorRepository.existsById(professorId)) {
 			return ResponseEntity.notFound().build();
