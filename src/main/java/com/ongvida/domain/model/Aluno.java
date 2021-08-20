@@ -20,29 +20,29 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Getter
 @Setter
-public class Professor {
-	
-    @Valid
-	@ConvertGroup(from = Default.class, to = ValidationGroups.ProfessorId.class)
+@Getter
+public class Aluno {
+    
+	@Valid
+	@ConvertGroup(from = Default.class, to = ValidationGroups.AlunoId.class)
 	@NotNull
-    @Id
+	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-    public Long getId() {
+	public Long getId() {
 		return id;
 	}
-
-	public void setId(Long id) {
-		this.id = id;
+	
+	public void setId(@Valid Long alunoId) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@NotBlank
-	@Size(max = 60 )
-
-    private String name;
+	
+	private String nome;
 	
 	@NotBlank
 	@Size(max = 255)
@@ -55,28 +55,25 @@ public class Professor {
 	@NotNull
     private LocalDate dataNascimento;
 	
-	@ManyToMany
-	private Set<Aluno> alunos = new HashSet<>();
-	
-	public Professor(){
-		
-	}
-	
+	@ManyToMany(mappedBy = "alunos")
+	private Set<Professor> professores = new HashSet<>();
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
 	}
 
-	@Override
+	@Override			
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
 			return false;
 		if (getClass() != obj.getClass())
-			return false;
-		Professor other = (Professor) obj;
+			return false;					
+		Aluno other = (Aluno) obj;
 		return Objects.equals(id, other.id);
 	}
 
-	}
+	
+}
