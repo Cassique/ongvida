@@ -16,8 +16,12 @@ import javax.validation.groups.ConvertGroup;
 import javax.validation.groups.Default;
 import com.ongvida.domain.ValidationGroups;
 import com.sun.istack.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Setter
+@Getter
 public class Aluno {
     
 	@Valid
@@ -27,6 +31,15 @@ public class Aluno {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	public Long getId() {
+		return id;
+	}
+	
+	public void setId(@Valid Long alunoId) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	@NotBlank
 	
 	private String nome;
@@ -44,54 +57,6 @@ public class Aluno {
 	
 	@ManyToMany(mappedBy = "alunos")
 	private Set<Professor> professores = new HashSet<>();
-	
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public String getRg() {
-		return rg;
-	}
-
-	public void setRg(String rg) {
-		this.rg = rg;
-	}
-
-	public String getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
-
-	public LocalDate getDataNascimento() {
-		return dataNascimento;
-	}
-
-	public void setDataNascimento(LocalDate dataNascimento) {
-		this.dataNascimento = dataNascimento;
-	}
-	
-	public Set<Professor> getProfessores() {
-		return professores;
-	}
-
-	public void setProfessores(Set<Professor> professores) {
-		this.professores = professores;
-	}
 
 	@Override
 	public int hashCode() {
@@ -109,4 +74,6 @@ public class Aluno {
 		Aluno other = (Aluno) obj;
 		return Objects.equals(id, other.id);
 	}
+
+	
 }

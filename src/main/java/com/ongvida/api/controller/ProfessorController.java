@@ -3,7 +3,6 @@ package com.ongvida.api.controller;
 import java.util.List;
 import java.util.Optional;
 import javax.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import com.ongvida.domain.model.Professor;
 import com.ongvida.domain.repository.ProfessorRepository;
-import com.ongvida.domain.service.CadastroProfessorService;
+import com.ongvida.api.model.CadastroProfessorService;
 
 @RestController
 @RequestMapping("/api/teachers")
@@ -27,11 +26,16 @@ public class ProfessorController {
 	private final ProfessorRepository professorRepository = null;
 	private final CadastroProfessorService cadastroProfessorService = new CadastroProfessorService();
 	
-	@GetMapping
-	public List<Professor> listar(){
+	//@GetMapping
+	//public List<ProfessorSummaryModel> listar(){
 		
-		return professorRepository.findAll();
-		}
+		//return professorRepository.findAll()
+		//.stream()
+		//.map(this::toProfessorSummaryModel)
+		//.collect(Collectors.toList());
+
+
+		//}
 	@GetMapping("/findAll")
 	public List<Professor> findByname(){
 		return professorRepository.findByName("Cassio");

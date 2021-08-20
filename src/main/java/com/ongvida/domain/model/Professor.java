@@ -16,9 +16,12 @@ import javax.validation.groups.ConvertGroup;
 import javax.validation.groups.Default;
 import com.ongvida.domain.ValidationGroups;
 import com.sun.istack.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
-
+@Getter
+@Setter
 public class Professor {
 	
     @Valid
@@ -28,7 +31,15 @@ public class Professor {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-    @NotBlank
+    public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	@NotBlank
 	@Size(max = 60 )
 
     private String name;
@@ -51,54 +62,6 @@ public class Professor {
 		
 	}
 	
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getNome() {
-		return name;
-	}
-
-	public void setNome(String nome) {
-		this.name = nome;
-	}
-
-	public String getRg() {
-		return rg;
-	}
-
-	public void setRg(String rg) {
-		this.rg = rg;
-	}
-
-	public String getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
-	
-	public LocalDate getData_nascimento() {
-		return dataNascimento;
-	}
-
-	public void setData_nascimento(LocalDate data_nascimento) {
-		this.dataNascimento = data_nascimento;
-	}
-
-	public Set<Aluno> getAlunos() {
-		return alunos;
-	}
-
-	public void setAlunos(Set<Aluno> alunos) {
-		this.alunos = alunos;
-	}
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

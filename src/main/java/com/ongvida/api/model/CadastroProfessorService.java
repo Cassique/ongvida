@@ -1,4 +1,4 @@
-/*package com.ongvida.domain.service;
+package com.ongvida.api.model;
 
 import org.springframework.stereotype.Service;
 import com.ongvida.api.controller.RequiredArgsConstructor;
@@ -19,4 +19,4 @@ public class CadastroProfessorService {
 		professorRepository.deleteById(professorId);
 	}
 		
-	}*/
+	}

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import com.ongvida.domain.model.Aluno;
 import com.ongvida.domain.repository.AlunoRepository;
-import com.ongvida.domain.service.CadastroAlunoService;
+import com.ongvida.api.model.CadastroAlunoService;
 @RestController
 @RequestMapping("/api/students")
 
