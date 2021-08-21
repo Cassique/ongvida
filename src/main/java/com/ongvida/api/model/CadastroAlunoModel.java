@@ -1,17 +1,16 @@
 package com.ongvida.api.model;
 
 import org.springframework.stereotype.Service;
-import com.ongvida.api.controller.RequiredArgsConstructor;
-import com.ongvida.api.model.ProfessorSummaryModel;
 import com.ongvida.domain.model.Aluno;
-import com.ongvida.domain.model.Professor;
 import com.ongvida.domain.repository.AlunoRepository;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class CadastroAlunoService {
+public class CadastroAlunoModel {
 	
-	private AlunoRepository alunoRepository;
+	private final AlunoRepository alunoRepository = null;
 	public Aluno salvar(Aluno aluno) {
 		return alunoRepository.save(aluno);
 		

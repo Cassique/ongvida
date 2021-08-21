@@ -2,6 +2,8 @@ package com.ongvida.api.controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,9 +16,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.ongvida.api.model.CadastroProfessorModel;
+import com.ongvida.api.model.ProfessorSummaryModel;
 import com.ongvida.domain.model.Professor;
 import com.ongvida.domain.repository.ProfessorRepository;
-import com.ongvida.api.model.CadastroProfessorService;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/teachers")
@@ -24,18 +29,19 @@ import com.ongvida.api.model.CadastroProfessorService;
 public class ProfessorController {
 	
 	private final ProfessorRepository professorRepository = null;
-	private final CadastroProfessorService cadastroProfessorService = new CadastroProfessorService();
+	private final ProfessorSummaryModel professorSummaryModel;
+	private final CadastroProfessorModel cadastroProfessorModel = new CadastroProfessorModel();
 	
-	//@GetMapping
-	//public List<ProfessorSummaryModel> listar(){
+	@GetMapping
+	public List<ProfessorSummaryModel> listarTodos(){
 		
-		//return professorRepository.findAll()
-		//.stream()
-		//.map(this::toProfessorSummaryModel)
-		//.collect(Collectors.toList());
+	return professorRepository.findAll()
+	.stream()
+	.map(this::toProfessorSummaryModel)
+	.collect(Collectors.toList());
 
-
-		//}
+    }	
+	
 	@GetMapping("/findAll")
 	public List<Professor> findByname(){
 		return professorRepository.findByName("Cassio");
@@ -62,7 +68,7 @@ public class ProfessorController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public Professor adicionar(@Valid @RequestBody Professor professor) {
-	return	cadastroProfessorService.salvar(professor);
+	return	cadastroProfessorModel.salvar(professor);
 		
 	}
 	
@@ -75,7 +81,7 @@ public class ProfessorController {
 		}
 		
 		professor.setId(professorId);
-		professor = cadastroProfessorService.salvar(professor);
+		professor = cadastroProfessorModel.salvar(professor);
 		
 		return ResponseEntity.ok(professor);
 	}
@@ -86,7 +92,7 @@ public class ProfessorController {
 			return ResponseEntity.notFound().build();
 		}
 		
-		cadastroProfessorService.excluir(professorId);
+		cadastroProfessorModel.excluir(professorId);
 		return ResponseEntity.noContent().build();
 	}
 	
