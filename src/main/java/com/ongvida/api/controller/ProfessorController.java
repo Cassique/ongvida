@@ -1,9 +1,7 @@
 package com.ongvida.api.controller;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
-
 import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,12 +14,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.ongvida.api.model.CadastroProfessorModel;
+import com.ongvida.api.model.ProfessorModel;
 import com.ongvida.api.model.ProfessorSummaryModel;
 import com.ongvida.domain.model.Professor;
 import com.ongvida.domain.repository.ProfessorRepository;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 
 @RestController
 @RequestMapping("/api/teachers")
@@ -29,62 +28,67 @@ import lombok.RequiredArgsConstructor;
 public class ProfessorController {
 	
 	private final ProfessorRepository professorRepository = null;
-	private final ProfessorSummaryModel professorSummaryModel;
+	
 	private final CadastroProfessorModel cadastroProfessorModel = new CadastroProfessorModel();
+	
+	private final ModelMapper modelMapper = new ModelMapper();
+	
+	private ProfessorModel toProfessorModel(Professor professor){
+		return modelMapper.map(professor, ProfessorModel.class);
+	}
+	
+	private ProfessorSummaryModel toProfessorSummaryModel(Professor professor) {
+		
+		return modelMapper.map(professor,ProfessorSummaryModel.class);
+	}
 	
 	@GetMapping
 	public List<ProfessorSummaryModel> listarTodos(){
-		
 	return professorRepository.findAll()
 	.stream()
 	.map(this::toProfessorSummaryModel)
 	.collect(Collectors.toList());
-
-    }	
+	}	
 	
-	@GetMapping("/findAll")
-	public List<Professor> findByname(){
-		return professorRepository.findByName("Cassio");
+	@GetMapping("/{professorId}")
+	public ProfessorModel buscarPorId(@PathVariable Long professorId) {
+		Professor professor = professorRepository.findById(professorId)
+				.orElseThrow(
+						//ProfessorNaoEncontradoException::new
+						);
+	return toProfessorModel(professor);
+			}
+	@GetMapping("/{name}")
+	public ProfessorModel buscarPeloNome(@PathVariable String name){
+		Professor professor = (Professor) professorRepository.findByName(name);
+				//ProfessorNaoEncontradoException::new
+				//);
+				//return professorRepository.findByName("Cassio");
+	return toProfessorModel(professor);
 	}
-	
 	@GetMapping("/name/{name}")
-	public List<Professor> findBynameContaining(@PathVariable String name){
-		return professorRepository.findByNameContaining(name);
+	public ProfessorModel buscarPorLetraDoNome(@PathVariable String name){
+		Professor professor = (Professor) professorRepository.findByNameContaining(name);
+		return toProfessorModel(professor);
 	}
-	
-	@GetMapping("/{teacherId}")
-	public ResponseEntity<Professor> buscar(@PathVariable Long professorId) {
-		Optional<Professor> professor = professorRepository.findById(professorId);
-	
-		if(professor.isPresent()) {
-			return ResponseEntity.ok(professor.get());
-			
+	/*@PutMapping("/{teacherId}")
+	public ResponseEntity<Professor> atualizar(@Valid @PathVariable Long professorId,
+	@RequestBody Professor professor){
+		if (!professorRepository.existsById(professorId)) {
+			return ResponseEntity.notFound().build();
 		}
-		
-	return ResponseEntity.notFound().build();
-	
-}
-
+		professor.setId(professorId);
+		professor = cadastroProfessorModel.salvar(professor);
+		return ResponseEntity.ok(professor);
+	}*/
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Professor adicionar(@Valid @RequestBody Professor professor) {
+	public ProfessorModel adicionar(@Valid @RequestBody Professor professor) {
 	return	cadastroProfessorModel.salvar(professor);
 		
 	}
 	
-	@PutMapping("/{teacherId}")
-	public ResponseEntity<Professor> atualizar(@Valid @PathVariable Long professorId,
-	@RequestBody Professor professor){
-		
-		if (!professorRepository.existsById(professorId)) {
-			return ResponseEntity.notFound().build();
-		}
-		
-		professor.setId(professorId);
-		professor = cadastroProfessorModel.salvar(professor);
-		
-		return ResponseEntity.ok(professor);
-	}
+	
 	
 	@DeleteMapping("/{teacherId}")
 	public ResponseEntity<Void> remover(@PathVariable Long professorId) {
@@ -95,5 +99,5 @@ public class ProfessorController {
 		cadastroProfessorModel.excluir(professorId);
 		return ResponseEntity.noContent().build();
 	}
-	
-}
+
+	}
