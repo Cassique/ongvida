@@ -1,4 +1,4 @@
-package com.ongvida.api.exceptionhandler;
+package com.ongvida.exception.exceptionhandler;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import com.ongvida.domain.exception.BusinessException;
+import com.ongvida.exception.BusinessException;
 @ControllerAdvice 
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	@Autowired

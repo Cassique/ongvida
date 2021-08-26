@@ -1,4 +1,4 @@
-package com.ongvida.api.exceptionhandler;
+package com.ongvida.exception.exceptionhandler;
 
 import java.time.LocalDateTime;
 import java.util.List;

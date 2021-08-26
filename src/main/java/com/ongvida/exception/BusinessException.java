@@ -1,10 +1,9 @@
-package com.ongvida.domain.exception;
+package com.ongvida.exception;
 
 public class BusinessException extends RuntimeException {
-
 	private static final long serialVersionUID = 1L;
 
-	private BusinessException(String message){
+	public  BusinessException(String message){
 	super(message);
 	
 	}

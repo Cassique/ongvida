@@ -1,4 +1,4 @@
-package com.ongvida.core;
+package com.ongvida.configuration;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;

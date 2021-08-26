@@ -7,11 +7,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ProfessorModel {
+public class TeacherModel {
 	private Long id;
 	private String name;
 	private String rg;
 	private String cpf;
-	private LocalDate dataNascimento;
+	private LocalDate birthDate;
 			
 }
