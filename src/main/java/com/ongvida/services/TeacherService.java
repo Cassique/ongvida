@@ -1,6 +1,7 @@
 package com.ongvida.services;
 
 import com.ongvida.api.model.TeacherModel;
+import com.ongvida.dtos.TeacherDTO;
 import com.ongvida.entities.Teacher;
 import com.ongvida.repositories.TeacherRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +28,7 @@ public class TeacherService {
     }
 
     public List<Teacher> findAll() {
-        return null;
+        return teacherRepository.findAll();
     }
 
     public List<Teacher> findByNameContaining(String name) {
@@ -44,5 +45,9 @@ public class TeacherService {
 
     public TeacherModel parseToTeacherModel(Teacher teacher) {
         return modelMapper.map(teacher, TeacherModel.class);
+    }
+
+    public Teacher parseToTeacherEntity(TeacherDTO teacherDTO) {
+        return modelMapper.map(teacherDTO, Teacher.class);
     }
 }

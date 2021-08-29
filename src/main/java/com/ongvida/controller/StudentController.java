@@ -3,26 +3,17 @@ package com.ongvida.controller;
 import java.util.List;
 import java.util.Optional;
 import javax.validation.Valid;
-
 import com.ongvida.api.model.StudentModel;
 import com.ongvida.dtos.StudentDTO;
 import com.ongvida.services.StudentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.ongvida.entities.Student;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/students")
+@RequestMapping("/api/student")
 @RequiredArgsConstructor
 public class StudentController {
 
@@ -38,8 +29,8 @@ public class StudentController {
         return studentService.findByName(name);
     }
 
-    @GetMapping("/{name}")
-    public List<Student> findByNameContaining(String name) {
+    @GetMapping("/name/{name}")
+    public List<Student> findByNameContaining(@PathVariable String name) {
         return studentService.findByNameContaining(name);
     }
 
@@ -57,7 +48,7 @@ public class StudentController {
         return studentService.parseToStudentModel(studentService.create(studentEntity));
     }
 
-    @PutMapping("/{studentId}")
+    @PatchMapping("/{studentId}")
     public ResponseEntity<Student> update(@Valid @PathVariable Long studentId,
                                           @RequestBody Student student) {
 

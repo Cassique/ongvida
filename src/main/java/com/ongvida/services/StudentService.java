@@ -32,7 +32,7 @@ public class StudentService {
     }
 
     public List<Student> findAll() {
-        return null;
+        return studentRepository.findAll();
     }
 
     public List<Student> findByNameContaining(String name) {

@@ -2,20 +2,18 @@ package com.ongvida.entities;
 
 import java.time.LocalDate;
 import java.util.Set;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import lombok.Getter;
-import lombok.Setter;
 
+import lombok.*;
+
+@Data
+@Builder
 @Entity
-@Setter
-@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Student {
 
 	@Id
@@ -38,5 +36,9 @@ public class Student {
 	
 	@ManyToMany(mappedBy = "students")
 	private Set<Teacher> teachers;
+
+	@OneToMany
+	@JoinTable(name = "student_subjects")
+	private Set<Subject> subjects;
 	
 }

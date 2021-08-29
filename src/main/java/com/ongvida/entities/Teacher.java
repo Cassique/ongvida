@@ -3,18 +3,21 @@ package com.ongvida.entities;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
-@Entity
 @Data
+@Builder
+@Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class Teacher {
 
     @Id
@@ -37,5 +40,8 @@ public class Teacher {
 	
 	@ManyToMany
 	private Set<Student> students;
+
+	@OneToMany
+	private Set<Subject> subjects;
 
 	}

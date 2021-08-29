@@ -3,7 +3,7 @@ package com.ongvida.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
-
+import com.ongvida.dtos.TeacherDTO;
 import com.ongvida.services.TeacherService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,16 +11,13 @@ import org.springframework.web.bind.annotation.*;
 import com.ongvida.api.model.TeacherModel;
 import com.ongvida.entities.Teacher;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 
 @RestController
-@RequestMapping("/api/teachers")
+@RequestMapping("/api/teacher")
 @RequiredArgsConstructor
 public class TeacherController {
 
     private final TeacherService teacherService;
-    private final ModelMapper modelMapper;
-
 
     @GetMapping
     public List<TeacherModel> findAll() {
@@ -39,7 +36,7 @@ public class TeacherController {
         return ResponseEntity.ok().body(teacherService.parseToTeacherModel(teacher.get()));
     }
 
-    @GetMapping("/{name}")
+    @GetMapping("/findByName/{name}")
     public TeacherModel findByName(@PathVariable String name) {
         Teacher teacher = (Teacher) teacherService.findByName(name);
         return teacherService.parseToTeacherModel(teacher);
@@ -52,15 +49,13 @@ public class TeacherController {
         var t = teachers.stream()
                 .map(teacherService::parseToTeacherModel)
                 .collect(Collectors.toList());
-
         return ResponseEntity.ok().body(t);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public TeacherModel create(@Valid @RequestBody Teacher teacher) {
-        var newTeacher = teacherService.create(teacher);
-
+    public TeacherModel create(@Valid @RequestBody TeacherDTO teacherDTO) {;
+        var newTeacher = teacherService.create(teacherService.parseToTeacherEntity(teacherDTO));
         return teacherService.parseToTeacherModel(newTeacher);
     }
 

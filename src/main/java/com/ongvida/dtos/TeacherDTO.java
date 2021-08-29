@@ -1,18 +1,20 @@
 package com.ongvida.dtos;
 
+import com.ongvida.entities.Student;
 import lombok.Data;
-
-import javax.validation.Valid;
+import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.Set;
 
-
-@Valid
 @Data
-public class StudentDTO {
+public class TeacherDTO {
+
+    private Long id;
+
     @NotBlank
+    @Size(max = 60 )
     private String name;
 
     @NotBlank
@@ -23,6 +25,8 @@ public class StudentDTO {
     @Size(max = 255)
     private String cpf;
 
-    @NotNull
     private LocalDate birthDate;
+
+    @ManyToMany
+    private Set<Student> students;
 }
