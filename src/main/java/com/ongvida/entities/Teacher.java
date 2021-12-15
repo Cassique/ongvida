@@ -26,7 +26,11 @@ public class Teacher {
 
 	@NotBlank
 	@Size(max = 60 )
-    private String name;
+	private String firstName;
+
+	@NotBlank
+	@Size(max = 60 )
+	private String lastName;
 	
 	@NotBlank
 	@Size(max = 255)

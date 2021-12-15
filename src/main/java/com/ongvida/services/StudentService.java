@@ -1,13 +1,12 @@
 package com.ongvida.services;
 
-import com.ongvida.api.model.StudentModel;
 import com.ongvida.dtos.StudentDTO;
 import com.ongvida.entities.Student;
 import com.ongvida.repositories.StudentRepository;
+import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -35,8 +34,10 @@ public class StudentService {
         return studentRepository.findAll();
     }
 
-    public List<Student> findByNameContaining(String name) {
-        return studentRepository.findByNameContaining(name);
+    public List<Student> findByNameContaining(String name) throws NotFoundException {
+         var students =studentRepository.findByNameContaining(name);
+         if(students.isEmpty()) throw new NotFoundException("There are no char matches for this");
+         return students;
     }
 
     public Optional<Student> findById(Long id) {
@@ -47,11 +48,13 @@ public class StudentService {
         return studentRepository.findByName(name);
     }
 
-    public StudentModel parseToStudentModel(Student student) {
-        return modelMapper.map(student, StudentModel.class);
-    }
 
-    public Student parseToStudentEntity(StudentDTO studentDTO) {
-        return modelMapper.map(studentDTO, Student.class);
+    public Student toEntity(StudentDTO studentDTO) {
+        return Student.builder()
+                .birthDate(studentDTO.getBirthDate())
+                .cpf(studentDTO.getCpf())
+                .name(studentDTO.getName())
+                .rg(studentDTO.getRg())
+                .build();
     }
 }

@@ -1,13 +1,10 @@
 package com.ongvida.services;
 
-import com.ongvida.api.model.TeacherModel;
 import com.ongvida.dtos.TeacherDTO;
 import com.ongvida.entities.Teacher;
 import com.ongvida.repositories.TeacherRepository;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -16,7 +13,6 @@ import java.util.Optional;
 public class TeacherService {
 
     private final TeacherRepository teacherRepository;
-    private final ModelMapper modelMapper;
 
     public Teacher create(Teacher t) {
         return teacherRepository.save(t);
@@ -43,11 +39,21 @@ public class TeacherService {
         return teacherRepository.findByNameContaining(name);
     }
 
-    public TeacherModel parseToTeacherModel(Teacher teacher) {
-        return modelMapper.map(teacher, TeacherModel.class);
+    public TeacherDTO toDTO(Teacher teacher) {
+         return TeacherDTO.builder()
+                 .birthDate(teacher.getBirthDate())
+                 .cpf(teacher.getCpf())
+                 .firstName(teacher.getFirstName())
+                 .lastName(teacher.getLastName())
+                 .build();
     }
 
-    public Teacher parseToTeacherEntity(TeacherDTO teacherDTO) {
-        return modelMapper.map(teacherDTO, Teacher.class);
+    public Teacher toEntity(TeacherDTO teacherDTO){
+        return Teacher.builder()
+                .birthDate(teacherDTO.getBirthDate())
+                .cpf(teacherDTO.getCpf())
+                .firstName(teacherDTO.getFirstName())
+                .lastName(teacherDTO.getLastName())
+                .build();
     }
 }

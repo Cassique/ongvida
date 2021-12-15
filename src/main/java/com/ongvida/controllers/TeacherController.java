@@ -1,4 +1,4 @@
-package com.ongvida.controller;
+package com.ongvida.controllers;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -8,7 +8,6 @@ import com.ongvida.services.TeacherService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.ongvida.api.model.TeacherModel;
 import com.ongvida.entities.Teacher;
 import lombok.RequiredArgsConstructor;
 
@@ -19,44 +18,42 @@ public class TeacherController {
 
     private final TeacherService teacherService;
 
-    @GetMapping
-    public List<TeacherModel> findAll() {
-        return teacherService.findAll()
+    @GetMapping("/")
+    public ResponseEntity<List<TeacherDTO>> findAll() {
+        var allTeachers =teacherService.findAll()
                 .stream()
-                .map(teacherService::parseToTeacherModel)
+                .map(teacherService::toDTO)
                 .collect(Collectors.toList());
+        return ResponseEntity.ok().body(allTeachers);
     }
 
     @GetMapping("/{teacherId}")
-    public ResponseEntity<TeacherModel> findById(@PathVariable Long teacherId) {
-
+    public ResponseEntity<TeacherDTO> findById(@PathVariable Long teacherId) {
         var teacher = teacherService.findById(teacherId);
         if (teacher.isEmpty()) return ResponseEntity.noContent().build();
-
-        return ResponseEntity.ok().body(teacherService.parseToTeacherModel(teacher.get()));
+        return ResponseEntity.ok().body(teacherService.toDTO(teacher.get()));
     }
 
     @GetMapping("/findByName/{name}")
-    public TeacherModel findByName(@PathVariable String name) {
+    public TeacherDTO findByName(@PathVariable String name) {
         Teacher teacher = (Teacher) teacherService.findByName(name);
-        return teacherService.parseToTeacherModel(teacher);
+        return teacherService.toDTO(teacher);
     }
 
     @GetMapping("/name/{name}")
-    public ResponseEntity<List<TeacherModel>> findByNameContaining(@PathVariable String name) {
+    public ResponseEntity<List<TeacherDTO>> findByNameContaining(@PathVariable String name) {
         List<Teacher> teachers = teacherService.findByNameContaining(name);
-
         var t = teachers.stream()
-                .map(teacherService::parseToTeacherModel)
+                .map(teacherService::toDTO)
                 .collect(Collectors.toList());
         return ResponseEntity.ok().body(t);
     }
 
-    @PostMapping
+    @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public TeacherModel create(@Valid @RequestBody TeacherDTO teacherDTO) {;
-        var newTeacher = teacherService.create(teacherService.parseToTeacherEntity(teacherDTO));
-        return teacherService.parseToTeacherModel(newTeacher);
+    public ResponseEntity<?> create(@Valid @RequestBody TeacherDTO teacherDTO) {;
+        var newTeacher = teacherService.create(teacherService.toEntity(teacherDTO));
+        return ResponseEntity.ok().body(teacherService.toDTO(newTeacher));
     }
 
     @DeleteMapping("/{teacherId}")

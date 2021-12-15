@@ -1,6 +1,7 @@
 package com.ongvida.dtos;
 
 import com.ongvida.entities.Student;
+import lombok.Builder;
 import lombok.Data;
 import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotBlank;
@@ -9,13 +10,18 @@ import java.time.LocalDate;
 import java.util.Set;
 
 @Data
+@Builder
 public class TeacherDTO {
 
     private Long id;
 
     @NotBlank
     @Size(max = 60 )
-    private String name;
+    private String firstName;
+
+    @NotBlank
+    @Size(max = 60 )
+    private String lastName;
 
     @NotBlank
     @Size(max = 255)

@@ -1,6 +1,7 @@
 package com.ongvida.entities;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -40,5 +41,8 @@ public class Student {
 	@OneToMany
 	@JoinTable(name = "student_subjects")
 	private Set<Subject> subjects;
+
+	@OneToMany
+	private List<Responsible> responsibles;
 	
 }
